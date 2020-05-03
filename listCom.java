@@ -86,5 +86,21 @@ public class listCom {
 		estimatedTime = System.nanoTime() - startTime;
         	System.out.println(rand2);
         	System.out.println("Time (in ms): " + estimatedTime/1000000);
+		
+		 double average = 0;
+        	// run 100 time, generated randomly 10000 integer for sorting
+		for (int i = 0; i < 100; i++) {
+			startTime = System.nanoTime();
+			List<Integer> rand3 = new Random()
+						.ints( 10000)
+						.sorted()
+						.boxed()
+						.collect( Collectors.toList() );
+			estimatedTime = System.nanoTime() - startTime;
+		   	average += estimatedTime;	
+		    	System.out.println("Time (in ms): " + estimatedTime/1000000);
+		}
+
+		System.out.println("Average Time (in ms): " + (average/1000000)/100);
 	}
 }
