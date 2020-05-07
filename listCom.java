@@ -8,21 +8,29 @@ import java.util.stream.Stream;
 
 public class listCom {
     public static void main(String[] args) {
-        exampleListLooping(); //using traditional looping
-        exampleListStreams();
-        exampleListStreams2();
-        boopBeepListStream();
-        boopBeepListCollectors();
-        sortRandom1();
-        sortRandom2();
-        sortRandom100Times();
+       // getAverageExampleLoop(); //range 0..6
+       //  getAveBiggerExample();
+       // getAveBiggerExampleStreams();
+       // getAveExampleStreams();
+        getHugeListStreamAve();
+       // getHugeListLoopAve();
     } //end Main
+
+
+    public static void getAverageExampleLoop(){
+        long average=0;
+        for(int i=0; i<10; i++){
+            average+=exampleListLooping();
+        }
+        System.out.println("\n~Average execution time (ns): " + (average/(long)10));
+    }
+
 
     /* exampleList using loop
      * outputs squares in list of integers meeting condition that x**2 is divisible by 3
-     * and prints execution time
+     * and prints execution time. iterative
      * */
-    public static void exampleListLooping(){
+    public static long exampleListLooping(){
         long start, end, inNano;
 
         start = System.nanoTime(); //start timing execution of function
@@ -39,9 +47,104 @@ public class listCom {
         inNano = (end-start); //get elapsed time in nanosec
         System.out.println("\n==ExampleList with regular for loop==\nResulting list with loop: " + sol);
         System.out.println("Execution time: " + inNano + " ns");
+        return inNano;
     }
 
-    public static void exampleListStreams(){
+
+    public static long biggerExampleListLooping(){
+            long start, end, inNano, inMilli;
+            ArrayList<Integer> result = new ArrayList<>();
+            ArrayList<Integer> ex2 = new ArrayList<>();
+                System.out.println("\n==Bigger ExampleList 10000 with Java Stream class using for loop==\n");
+            // used stream without create object
+            start = System.nanoTime();
+
+            //define list
+            /**List<Integer> ex2 = IntStream.range(0, 10000)
+                    .boxed() // must boxed to convert primitives stream to collection
+                    .collect(Collectors.toList());**/
+            for(int j=0; j<=10000; j++){
+                    ex2.add(j);
+            }
+
+            for(int i=0; i<ex2.size(); i++){
+                if(Math.pow(ex2.get(i),2) %3==0){
+                    result.add((int)Math.pow(ex2.get(i),2));
+                    //System.out.print(result.get(i) + " ");
+                }
+            }
+            System.out.print("Resulting list: [");
+            for(Integer x: result){
+                System.out.print(x + " ");
+            }
+            System.out.print("]");
+            end = System.nanoTime();
+            inNano = (end-start);
+            inMilli = TimeUnit.NANOSECONDS.toMillis(inNano);
+
+            System.out.println("\nExecution time: " + inMilli + " ms");
+            return inMilli;
+    }
+
+    public static void getAveBiggerExample(){
+        long average=0;
+        for(int i=0; i<10; i++){
+            average+=biggerExampleListLooping();
+        }
+        System.out.println("\n~Average execution time (ms): " + (average/(long)10));
+    }
+
+    public static long biggerExampleListStreams(){
+        long start, end, inNano, inMilli;
+        // used stream without create object
+        start = System.nanoTime();
+
+        List<Integer> ex2 = IntStream.range(0, 10000)
+                // must boxed to convert primitives stream to collection
+                .boxed()
+                .filter(x -> x % 3 == 0)
+                .map(x -> x * x)
+                .collect(Collectors.toList());
+
+        end = System.nanoTime();
+        inNano = (end-start);
+        inMilli = TimeUnit.NANOSECONDS.toMillis(inNano);
+        System.out.println("\n==Bigger ExampleList with Java Stream class using Java Stream==\nResulting list: " +
+                ex2);
+        System.out.println("Execution time: " + inMilli + " ms");
+        return inMilli;
+    }
+
+    public static long hugeExampleListStream(){
+        long start, end, inNano, inMilli;
+        // used stream without create object
+        start = System.nanoTime();
+
+        List<Integer> ex2 = IntStream.range(0, 100000)
+                // must boxed to convert primitives stream to collection
+                .boxed()
+                .filter(x -> x % 3 == 0)
+                .map(x -> x * x)
+                .collect(Collectors.toList());
+
+        end = System.nanoTime();
+        inNano = (end-start);
+        inMilli = TimeUnit.NANOSECONDS.toMillis(inNano);
+        System.out.println("\n==Bigger ExampleList with Java Stream class using Java Stream==\nResulting list: " +
+                ex2);
+        System.out.println("Execution time: " + inMilli + " ms");
+        return inMilli;
+    }
+
+    public static void getAveBiggerExampleStreams(){
+        long average=0;
+        for(int i=0; i<10; i++){
+            average+=biggerExampleListStreams();
+        }
+        System.out.println("\n~Average execution time (ms): " + (average/(long)10));
+    }
+
+    public static long exampleListStreams(){
         long start, end, inNano, inMilli;
         start = System.nanoTime();
         List<Integer> ex = Arrays.asList(0, 1, 2, 3, 4, 5, 6)
@@ -55,8 +158,10 @@ public class listCom {
         inMilli = TimeUnit.NANOSECONDS.toMillis(inNano);
         System.out.println("\n==ExampleList with Java Stream class==\nResulting list: " + ex);
         System.out.println("Execution time: " + inMilli + " ms");
+        return inMilli;
     }
 
+    //diff between exampleListStreams: IntStream range
     public static void exampleListStreams2(){
         long start, end, inNano, inMilli;
         // used stream without create object
@@ -76,6 +181,9 @@ public class listCom {
                      ex2);
         System.out.println("Execution time: " + inMilli + " ms");
     }
+
+
+
 
     public static void boopBeepListStream() {
         long start, end, inNano, inMilli;
@@ -168,5 +276,73 @@ public class listCom {
         inMilliAve = TimeUnit.NANOSECONDS.toMillis(inNanoAve);
         System.out.println("\n==Sort random list of 10000 integers==\nAverage execution time: " + inMilliAve + " ms");
     }
+
+    //adding
+    //multiplying list
+    //appending
+
+    public static long hugeExampleListLooping(){
+        long start, end, inNano, inMilli;
+        ArrayList<Integer> result = new ArrayList<>();
+        ArrayList<Integer> ex2 = new ArrayList<>();
+        System.out.println("\n==Bigger ExampleList 10000 with Java Stream class using for loop==\n");
+        // used stream without create object
+        start = System.nanoTime();
+
+        //define list
+        /**List<Integer> ex2 = IntStream.range(0, 10000)
+         .boxed() // must boxed to convert primitives stream to collection
+         .collect(Collectors.toList());**/
+        for(int j=0; j<=100000; j++){
+            ex2.add(j);
+        }
+
+        for(int i=0; i<ex2.size(); i++){
+            if(Math.pow(ex2.get(i),2) %3==0){
+                result.add((int)Math.pow(ex2.get(i),2));
+                //System.out.print(result.get(i) + " ");
+            }
+        }
+        System.out.print("Resulting list: [");
+        for(Integer x: result){
+            System.out.print(x + " ");
+        }
+        System.out.print("]");
+        end = System.nanoTime();
+        inNano = (end-start);
+        inMilli = TimeUnit.NANOSECONDS.toMillis(inNano);
+
+        System.out.println("\nExecution time: " + inMilli + " ms");
+        return inMilli;
+    }
+
+
+    public static void getAveExampleStreams(){
+        long average=0;
+        for(int i=0; i<10; i++){
+            average+=exampleListStreams();
+        }
+        System.out.println("\n~Average execution time (ms): " + (average/(long)10));
+    }
+
+    public static void getHugeListStreamAve(){
+        long average=0;
+        for(int i=0; i<10; i++){
+            average+=hugeExampleListStream();
+        }
+        System.out.println("\n~Average execution time 100000 (ms): " + (average/(long)10));
+    }
+
+    public static void getHugeListLoopAve(){
+        long average=0;
+        for(int i=0; i<10; i++){
+            average+=hugeExampleListLooping();
+        }
+        System.out.println("\n~Average execution time 100000 (ms): " + (average/(long)10));
+    }
+
+
+
+
 
 }//end listCom
