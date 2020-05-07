@@ -4,8 +4,10 @@ import System.IO
 --resulting list = [0, 9, 36]
 exampleList = [ x * x | x <-[0..6], x `mod` 3 == 0] 
 
+--increase range of exampleList from 0..10,000
 biggerExampleList = [x * x | x <- [0..10000], x `mod` 3==0]
 
+--increase range of exampleList from 0..100,000
 hugeExampleList = [x * x | x <- [0..100000], x `mod` 3==0]
 
 --tested with inputList [10..20] - if x is less than 15, print BOOP else print BEEP
