@@ -20,18 +20,35 @@ $ ghci
 Prelude> :l Lists
 *Main> :r 
 ```
-To run the first list, which returns squares divisible by 3 in the range 0-6:
+To run the first exampleList, which returns squares divisible by 3 in the range 0-6:
 ```shell script
 *Main> exampleList 
 ```
-To run the second list, which returns "BOOP" or "BEEP" depending on if the value is less than 15:
+To run biggerExampleList, which returns squares divisible by 3 in the range 0-10,000:
+```shell script
+*Main> biggerExampleList 
+```
+To run hugeExampleList, which returns squares divisible by 3 in the range 0-100,000:
+```shell script
+*Main> hugeExampleList 
+```
+To run another list we used for experimentation, which returns "BOOP" or "BEEP" depending on if the value is less than 15:
 ```shell script
 *Main> boops [10..20] 
 ```
-The list ranging from 10-20 can be changed to any list. To specify a range, format the list with '..' between the min and max, 
+Note: The list ranging from 10-20 can be changed to any list. To specify a range, format the list with '..' between the min and max, 
 ie [5..30] 
 
-To run the third list, which sorts an unsorted list: 
+### More list comprehensions tested for the project in Haskell
+To run another experimental list comprehension, which sorts an unsorted list: 
 ```shell script
 *Main> sortedList
+```
+Our experimental list that removes vowels from an explicitly declared word can be run with: 
+```shell script
+*Main> rmVowels
+```
+Lastly, our experimental list comprehension that creates a multiplication table for values 1-3 can be run with: 
+```shell script
+*Main> multTable
 ```
