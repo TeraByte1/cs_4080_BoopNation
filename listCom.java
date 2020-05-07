@@ -1,4 +1,3 @@
-import java.sql.Time;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -7,16 +6,22 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream; 
 
 public class listCom {
+    /**This main method is used to call our implemented list comprehensions either individually or for one iteration,
+     * which will display execution time for a single iteration. Methods, such as getAverageExampleLoop,
+     * displays execution time as an average over ten iterations. All exampleList methods are for the
+     * list comprehension [x * x for x in range(7) if x % 3 ==0]. The resulting list will include squares
+     * in the list that are divisible by 3.
+    **/
     public static void main(String[] args) {
        // getAverageExampleLoop(); //range 0..6
-       //  getAveBiggerExample();
+       //  getAveBiggerExample(); //range 0..10,000
        // getAveBiggerExampleStreams();
        // getAveExampleStreams();
-        getHugeListStreamAve();
+        getHugeListStreamAve(); //range 0..100,000
        // getHugeListLoopAve();
     } //end Main
 
-
+    //method to compute average for loop approach for exampleList, range 0..6
     public static void getAverageExampleLoop(){
         long average=0;
         for(int i=0; i<10; i++){
@@ -25,16 +30,10 @@ public class listCom {
         System.out.println("\n~Average execution time (ns): " + (average/(long)10));
     }
 
-
-    /* exampleList using loop
-     * outputs squares in list of integers meeting condition that x**2 is divisible by 3
-     * and prints execution time. iterative
-     * */
+   //looping approach for exampleList, range 0..6
     public static long exampleListLooping(){
         long start, end, inNano;
-
         start = System.nanoTime(); //start timing execution of function
-
         List<Integer> it = Arrays.asList(0, 1, 2, 3, 4, 5, 6);
         List<Integer> sol = new ArrayList<Integer>();
         for(int i =0; i<it.size();i++)
@@ -42,7 +41,6 @@ public class listCom {
             if (it.get(i) % 3 == 0)
                 sol.add(i * i);
             }
-
         end = System.nanoTime(); //end timing
         inNano = (end-start); //get elapsed time in nanosec
         System.out.println("\n==ExampleList with regular for loop==\nResulting list with loop: " + sol);
@@ -50,19 +48,13 @@ public class listCom {
         return inNano;
     }
 
-
+    //looping approach for exampleList, range 0..10,000
     public static long biggerExampleListLooping(){
             long start, end, inNano, inMilli;
             ArrayList<Integer> result = new ArrayList<>();
             ArrayList<Integer> ex2 = new ArrayList<>();
                 System.out.println("\n==Bigger ExampleList 10000 with Java Stream class using for loop==\n");
-            // used stream without create object
             start = System.nanoTime();
-
-            //define list
-            /**List<Integer> ex2 = IntStream.range(0, 10000)
-                    .boxed() // must boxed to convert primitives stream to collection
-                    .collect(Collectors.toList());**/
             for(int j=0; j<=10000; j++){
                     ex2.add(j);
             }
@@ -70,7 +62,6 @@ public class listCom {
             for(int i=0; i<ex2.size(); i++){
                 if(Math.pow(ex2.get(i),2) %3==0){
                     result.add((int)Math.pow(ex2.get(i),2));
-                    //System.out.print(result.get(i) + " ");
                 }
             }
             System.out.print("Resulting list: [");
@@ -81,11 +72,11 @@ public class listCom {
             end = System.nanoTime();
             inNano = (end-start);
             inMilli = TimeUnit.NANOSECONDS.toMillis(inNano);
-
             System.out.println("\nExecution time: " + inMilli + " ms");
             return inMilli;
     }
 
+    //method to get average for bigger exampleList looping approach, range 0..10,000
     public static void getAveBiggerExample(){
         long average=0;
         for(int i=0; i<10; i++){
@@ -94,18 +85,15 @@ public class listCom {
         System.out.println("\n~Average execution time (ms): " + (average/(long)10));
     }
 
+    //Java Stream approach for exampleList, range 0..10,000
     public static long biggerExampleListStreams(){
         long start, end, inNano, inMilli;
-        // used stream without create object
         start = System.nanoTime();
-
         List<Integer> ex2 = IntStream.range(0, 10000)
-                // must boxed to convert primitives stream to collection
                 .boxed()
                 .filter(x -> x % 3 == 0)
                 .map(x -> x * x)
                 .collect(Collectors.toList());
-
         end = System.nanoTime();
         inNano = (end-start);
         inMilli = TimeUnit.NANOSECONDS.toMillis(inNano);
@@ -115,6 +103,7 @@ public class listCom {
         return inMilli;
     }
 
+    //Stream approach to exampleList, range 0..100,000
     public static long hugeExampleListStream(){
         long start, end, inNano, inMilli;
         // used stream without create object
@@ -136,6 +125,7 @@ public class listCom {
         return inMilli;
     }
 
+    //get average for Stream approach to exampleList, range 0..10,000
     public static void getAveBiggerExampleStreams(){
         long average=0;
         for(int i=0; i<10; i++){
@@ -144,6 +134,7 @@ public class listCom {
         System.out.println("\n~Average execution time (ms): " + (average/(long)10));
     }
 
+    //Stream approach to exampleList, range 0..6
     public static long exampleListStreams(){
         long start, end, inNano, inMilli;
         start = System.nanoTime();
@@ -166,7 +157,6 @@ public class listCom {
         long start, end, inNano, inMilli;
         // used stream without create object
         start = System.nanoTime();
-
         List<Integer> ex2 = IntStream.range(0, 7)
                 // must boxed to convert primitives stream to collection
                 .boxed()
@@ -182,9 +172,7 @@ public class listCom {
         System.out.println("Execution time: " + inMilli + " ms");
     }
 
-
-
-
+    //extra experiments -- return BEEP/BOOP depending on value
     public static void boopBeepListStream() {
         long start, end, inNano, inMilli;
         // return Boop if x < 15 else return Beep for x is [10-20]
@@ -202,6 +190,7 @@ public class listCom {
         System.out.println("\nExecution Time : " + inMilli + " ms");
     }
 
+    //extra experiments -- BEEP
     public static void boopBeepListCollectors(){
         long start, end, inNano, inMilli;
         start = System.nanoTime();
@@ -217,6 +206,7 @@ public class listCom {
         System.out.println("Execution Time: " + inMilli + " ms");
     }
 
+    //extra experiments -- sort random numbers
     public static void sortRandom1(){
         long start, end, inNano, inMilli;
         // generated random number and sort it
@@ -233,10 +223,10 @@ public class listCom {
         System.out.println("Execution time: " + inMilli + " ms");
     }
 
+    //extra experiments -- sort random list
     public static void sortRandom2(){
         long start, end, inNano, inMilli;
         // Random.ints will return an IntStream (#, low, high)
-        // must boxed for IntStream
         start = System.nanoTime();
         List<Integer> rand2 = new Random()
                 .ints(5, 0, 25)
@@ -250,11 +240,10 @@ public class listCom {
         System.out.println("Execution Time: " + inMilli + " ms");
     }
 
-    //returns execution time for 1 iteration
+    //extra experiments -- returns execution time for 1 iteration
     public static long sortRandom3(){
         long start, end;
         // run 100 time, generated randomly 10000 integer for sorting
-
             start = System.nanoTime(); //start timer for this iteration
             List<Integer> rand3 = new Random()
                     .ints(10000) //10000 random ints
@@ -262,11 +251,10 @@ public class listCom {
                     .boxed()
                     .collect(Collectors.toList());
             end= System.nanoTime(); //end timer for this iteration
-
             return (end-start);
     }
 
-    //does sortRandom3 100 times
+    //extra experiments -- sortRandom3 100 times
     public static void sortRandom100Times(){
         long nanoSum=0, inNanoAve, inMilliAve;
         for(int i=0; i<100; i++){
@@ -277,10 +265,7 @@ public class listCom {
         System.out.println("\n==Sort random list of 10000 integers==\nAverage execution time: " + inMilliAve + " ms");
     }
 
-    //adding
-    //multiplying list
-    //appending
-
+    //looping approach to exampleList, range 0..100,000
     public static long hugeExampleListLooping(){
         long start, end, inNano, inMilli;
         ArrayList<Integer> result = new ArrayList<>();
@@ -288,15 +273,9 @@ public class listCom {
         System.out.println("\n==Bigger ExampleList 10000 with Java Stream class using for loop==\n");
         // used stream without create object
         start = System.nanoTime();
-
-        //define list
-        /**List<Integer> ex2 = IntStream.range(0, 10000)
-         .boxed() // must boxed to convert primitives stream to collection
-         .collect(Collectors.toList());**/
         for(int j=0; j<=100000; j++){
             ex2.add(j);
         }
-
         for(int i=0; i<ex2.size(); i++){
             if(Math.pow(ex2.get(i),2) %3==0){
                 result.add((int)Math.pow(ex2.get(i),2));
@@ -311,12 +290,11 @@ public class listCom {
         end = System.nanoTime();
         inNano = (end-start);
         inMilli = TimeUnit.NANOSECONDS.toMillis(inNano);
-
         System.out.println("\nExecution time: " + inMilli + " ms");
         return inMilli;
     }
 
-
+    //get get average time for Stream approach to exampleList, range 0..6
     public static void getAveExampleStreams(){
         long average=0;
         for(int i=0; i<10; i++){
@@ -325,6 +303,7 @@ public class listCom {
         System.out.println("\n~Average execution time (ms): " + (average/(long)10));
     }
 
+    //get average time for Stream approach to exampleList, range 0..100,000
     public static void getHugeListStreamAve(){
         long average=0;
         for(int i=0; i<10; i++){
@@ -333,6 +312,7 @@ public class listCom {
         System.out.println("\n~Average execution time 100000 (ms): " + (average/(long)10));
     }
 
+    //get average time for looping approach to exampleList, range 0..10,000
     public static void getHugeListLoopAve(){
         long average=0;
         for(int i=0; i<10; i++){
@@ -340,9 +320,5 @@ public class listCom {
         }
         System.out.println("\n~Average execution time 100000 (ms): " + (average/(long)10));
     }
-
-
-
-
 
 }//end listCom
