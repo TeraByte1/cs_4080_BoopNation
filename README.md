@@ -1,12 +1,10 @@
 ## BoopNation | CS4080 Spring 20 Project: List Comprehension
 
-<<<<<<< HEAD
 ## Research Paper and Data from Tests
-Our research about list comprehension can be found [here](https://drive.google.com/file/d/1WM6RyvGl85rWauryKpAxJFTePKQBMlTN/view?usp=sharing).
+Our research about list comprehension can be found [here](https://drive.google.com/file/d/1laqffvoDwbreEYW_gasPx9qb1yHf96UO/view?usp=sharing).
 The data from our tests can also be found on this Github in the Data_from_Experiments.csv file or through this [link](https://docs.google.com/spreadsheets/d/1UEWyiYW3H_0VGl1LMfFLNhuwtlIrjYIzgFbggMD_bJo/edit?usp=sharing).
 =======
 ## Data From Experiments can be found here: [https://bit.ly/boopData]
->>>>>>> 688b6e76874710909f89a1ab10343173b9a1b19e
 
 ## Running Haskell 
 ### Step One - Get BoopNation's Source Code 
